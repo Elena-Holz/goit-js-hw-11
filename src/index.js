@@ -9,11 +9,8 @@ const API_KEY = '29134253-bbfb6b627ddeed17a742fb71a';
 const formRef = document.querySelector('#search-form');
 const galleryMarket = document.querySelector('.gallery');
 const inputRef = document.querySelector('input');
-console.log(inputRef);
-console.log(galleryMarket);
-console.log(formRef);
 const btnMore = document.querySelector('.load-more');
-console.log(btnMore);
+
 btnMore.classList.add('is-hidden');
  
 
@@ -48,9 +45,9 @@ async function handleSubmit(e) {
     
   try {
 const response = await getFetch(photoName, currentPage)
-  console.log('hits-length:', response.hits.length)
-  console.log(response);
-  console.log('totalHits:', response.totalHits);
+  // console.log('hits-length:', response.hits.length)
+  // console.log(response);
+  // console.log('totalHits:', response.totalHits);
     const fotoAr = response.hits;
   
   if (response.totalHits === 0) {
@@ -86,7 +83,7 @@ window.scrollBy({
   }
 
 function fotoGenerate(fotoAr) {
-     console.log(fotoAr);
+    //  console.log(fotoAr);
     const fotoCard = fotoAr
         .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
             return `
@@ -122,22 +119,22 @@ function fotoGenerate(fotoAr) {
 
 async function onClickBtnMore() {
   currentPage += 1;
-  console.log('currentPage', currentPage);
+  // console.log('currentPage', currentPage);
   btnMore.classList.remove('is-hidden');
 
   const response = await getFetch(photoName, currentPage)
   lightbox.refresh();
   currentHits += response.hits.length;
   // console.log('currentHits', currentHits);
-  console.log('totaltHits', response.totalHits)
-  console.log('response.hits.length:', response.hits.length);
+  // console.log('totaltHits', response.totalHits)
+  // console.log('response.hits.length:', response.hits.length);
   const fotoAr = response.hits;
  
   galleryMarket.insertAdjacentHTML("beforeend", fotoGenerate(fotoAr));
   
   if (response.totalHits % currentHits < response.hits.length) {
     currentHits += response.totalHits % currentHits;
-    console.log('currentHits', currentHits);
+    // console.log('currentHits', currentHits);
   } 
 
   if (currentHits >= response.totalHits || response.hits.length === 0) {
