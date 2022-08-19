@@ -57,9 +57,10 @@ const response = await getFetch(photoName, currentPage)
   
   if (response.totalHits > 0) {
     galleryMarket.innerHTML = '';
-    lightbox.refresh();
+   
      Notiflix.Notify.info(`Hooray! We found ${response.totalHits} images.`)
     galleryMarket.insertAdjacentHTML("beforeend", fotoGenerate(fotoAr));
+     lightbox.refresh();
     btnMore.addEventListener('click', onClickBtnMore);    
   }
     
@@ -88,7 +89,7 @@ function fotoGenerate(fotoAr) {
         .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
             return `
             <div class="photo-card">
-            <a href="${largeImageURL}" class=photo-card>
+            <a href="${largeImageURL}">
           <img src="${webformatURL}" alt="${tags}" loading="lazy" />
            </a>
           <div class="info">
@@ -123,7 +124,6 @@ async function onClickBtnMore() {
   btnMore.classList.remove('is-hidden');
 
   const response = await getFetch(photoName, currentPage)
-  lightbox.refresh();
   currentHits += response.hits.length;
   // console.log('currentHits', currentHits);
   // console.log('totaltHits', response.totalHits)
@@ -131,6 +131,7 @@ async function onClickBtnMore() {
   const fotoAr = response.hits;
  
   galleryMarket.insertAdjacentHTML("beforeend", fotoGenerate(fotoAr));
+ lightbox.refresh();
   
   if (response.totalHits % currentHits < response.hits.length) {
     currentHits += response.totalHits % currentHits;
